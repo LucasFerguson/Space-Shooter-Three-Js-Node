@@ -8,10 +8,14 @@ https://github.com/mrdoob/three.js/
 - [ ] This is an incomplete item
 
 # File System
-Space Shooter Three Js Node
-node_modules
-\ public
-+typings
-+index.js
-+package.json
- 
+Space Shooter Three Js Node  
+* node_modules  
+* public  
+  * js  
+    * libraries  
+      * three.js  
+    * game.js  
+  * index.html
+* typings  
+* index.js  
+* package.json  
