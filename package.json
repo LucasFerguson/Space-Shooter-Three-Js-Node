@@ -1,0 +1,15 @@
+{
+  "name": "space-shooter-three-js-node",
+  "version": "1.0.0",
+  "description": "Space Shooter Game Made With Three.js, Node and npm.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lucas Ferguson",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.106.2"
+  }
+}
