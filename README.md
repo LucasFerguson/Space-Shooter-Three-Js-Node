@@ -10,8 +10,8 @@ https://github.com/mrdoob/three.js/
 # File System
 Space Shooter Three Js Node
 node_modules
-- public
-- typings
-- index.js
-- package.json
+\ public
++typings
++index.js
++package.json
  
