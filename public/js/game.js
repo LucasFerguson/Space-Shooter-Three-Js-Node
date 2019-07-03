@@ -1,6 +1,11 @@
-var scene, renderer;
-var geometry, material, mesh;
-var camera;
+let scene, renderer;
+let geometry, material, mesh;
+
+let camera;
+
+var a = 10;
+let a = 10;
+
 
 init();
 animate();
