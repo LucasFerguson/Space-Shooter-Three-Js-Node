@@ -62,12 +62,13 @@ function init() {
     controller.setup();
 }
 
+
+
 function animate() {
 
     requestAnimationFrame(animate);
 
     // controller.update();
-    // console.log(controller.keyCodes);
 
     var left = -1;
     var up = 1;

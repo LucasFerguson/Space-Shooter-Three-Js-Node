@@ -17,7 +17,6 @@ class Controller {
      * @function - Controller update function, Called for each keyup and keydown
      */
     update() {
-        console.log(this.keyCodes[37]);
 
         // this.pointer.x = mouseX - windowWidth / 2 + viewport.pos.x;
         // this.pointer.y = mouseY - windowHeight / 2 + viewport.pos.y;

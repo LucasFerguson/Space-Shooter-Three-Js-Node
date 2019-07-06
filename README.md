@@ -7,11 +7,10 @@ Date Started 7/5/2019
 Three.Js Github
 https://github.com/mrdoob/three.js/
 
-
-
-- [x] This is a complete item
-- [ ] This is an incomplete item
-
+- [x] Controller Keyboard
+- [ ] Add mouse to controller
+- [ ] add viewport file
+- [ ] 
 
 
 # File System
