@@ -3,21 +3,23 @@ let geometry, material, mesh;
 
 let camera;
 
+//// ////
+let raycaster;
+let mouse;
+let ambientLight;
+//// ////
+
 init();
 animate();
 
 function init() {
 
+
+
     camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
     camera.position.z = 1;
 
     scene = new THREE.Scene();
-
-    geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-    material = new THREE.MeshNormalMaterial();
-
-    mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
 
     renderer = new THREE.WebGLRenderer({
         antialias: true
@@ -25,17 +27,47 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
+    //// ////
+    geometry = new THREE.BoxGeometry(1, 1, 1);
+    material = new THREE.MeshLambertMaterial({
+        color: 0x0000ff
+    });
+
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    //// ////
+
+    //// ////
+    raycaster = new THREE.Raycaster();
+    mouse = new THREE.Vector2();
+
+    ambientLight = new THREE.AmbientLight(0xffffff);
+    scene.add(ambientLight);
+    //// ////
 }
 
 function animate() {
 
     requestAnimationFrame(animate);
 
-    mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.02;
+    // update the picking ray with the camera and mouse position
+    raycaster.setFromCamera(mouse, camera);
+
+
+    // calculate objects intersecting the picking ray
+    var intersects = raycaster.intersectObjects(scene.children);
+
+    for (var i = 0; i < intersects.length; i++) {
+        console.log(intersects[i].point);
+
+        intersects[i].object.material.color.set(0x00ff00);
+
+    }
+
+    // mesh.rotation.x += 0.01;
+    // mesh.rotation.y += 0.02;
 
     renderer.render(scene, camera);
-
 }
 
 
@@ -44,13 +76,16 @@ function animate() {
 
 
 // mousemove
-window.addEventListener('mousemove', onDocumentMouseMove, false);
+window.addEventListener('mousemove', onMouseMove, false);
 
+function onMouseMove(event) {
 
-function onDocumentMouseMove(event) {
-    event.preventDefault();
-    mouse.x = event.clientX / windowWidth;
-    mouse.y = -event.clientY / windowHeight;
+    // calculate mouse position in normalized device coordinates
+    // (-1 to +1) for both components
+
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
 }
 
 
