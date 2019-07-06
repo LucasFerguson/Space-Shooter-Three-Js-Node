@@ -50,6 +50,8 @@ function animate() {
 
     requestAnimationFrame(animate);
 
+    keyboard();
+
     // update the picking ray with the camera and mouse position
     raycaster.setFromCamera(mouse, camera);
 
@@ -59,9 +61,7 @@ function animate() {
 
     for (var i = 0; i < intersects.length; i++) {
         console.log(intersects[i].point);
-
         intersects[i].object.material.color.set(0x00ff00);
-
     }
 
     // mesh.rotation.x += 0.01;
@@ -98,4 +98,49 @@ function onWindowResize() {
     renderer.setSize(windowWidth, windowHeight);
     camera.aspect = windowWidth / windowHeight;
     camera.updateProjectionMatrix();
+}
+
+
+var keyCode = {}; // You could also use an array
+onkeydown = onkeyup = function (e) {
+    e = e || event; // to deal with IE
+    keyCode[e.keyCode] = e.type == 'keydown';
+    /* insert conditional here */
+}
+
+function keyboard() {
+    if (keyCode) {
+        var left = -1;
+        var up = 1;
+        var right = 1;
+        var down = -1;
+
+        var speed = camera.position.z / 40;
+
+        if (keyCode[37]) {
+            camera.position.x += left * speed;
+        }
+        if (keyCode[38]) {
+            camera.position.y += up * speed;
+        }
+        if (keyCode[39]) {
+            camera.position.x += right * speed;
+        }
+        if (keyCode[40]) {
+            camera.position.y += down * speed;
+        }
+
+        //shift 16
+        //ctrl	17
+
+        var shift = -1;
+        var ctrl = 1;
+
+        if (keyCode[16]) {
+            camera.position.z += shift * speed;
+        }
+        if (keyCode[17]) {
+            camera.position.z += ctrl * speed;
+        }
+    }
 }
