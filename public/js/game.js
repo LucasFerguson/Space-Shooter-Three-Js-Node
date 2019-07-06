@@ -14,10 +14,8 @@ animate();
 
 function init() {
 
-
-
-    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-    camera.position.z = 1;
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10000);
+    camera.position.z = 30;
 
     scene = new THREE.Scene();
 
@@ -28,9 +26,10 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     //// ////
-    geometry = new THREE.BoxGeometry(1, 1, 1);
-    material = new THREE.MeshLambertMaterial({
-        color: 0x0000ff
+    geometry = new THREE.PlaneGeometry(50, 50);
+    material = new THREE.MeshPhongMaterial({
+        color: 0x0000ff,
+        wireframe: true
     });
 
     mesh = new THREE.Mesh(geometry, material);
@@ -61,15 +60,15 @@ function animate() {
 
     for (var i = 0; i < intersects.length; i++) {
         console.log(intersects[i].point);
-        intersects[i].object.material.color.set(0x00ff00);
+        // intersects[i].object.material.color.set(0x00ff00);
     }
 
     // mesh.rotation.x += 0.01;
     // mesh.rotation.y += 0.02;
 
+
     renderer.render(scene, camera);
 }
-
 
 
 
