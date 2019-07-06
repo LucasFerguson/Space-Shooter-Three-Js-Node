@@ -3,10 +3,6 @@ let geometry, material, mesh;
 
 let camera;
 
-var a = 10;
-let a = 10;
-
-
 init();
 animate();
 
