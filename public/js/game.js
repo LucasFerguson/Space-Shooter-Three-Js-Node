@@ -7,6 +7,9 @@ let camera;
 let raycaster;
 let mouse;
 let ambientLight;
+let shipSprite;
+let player = new Player();
+let controller = new Controller();
 //// ////
 
 init();
@@ -37,19 +40,69 @@ function init() {
     //// ////
 
     //// ////
+    var spriteMap = new THREE.TextureLoader().load("./assets/images/Space Ship.png");
+
+    var spriteMaterial = new THREE.SpriteMaterial({
+        map: spriteMap,
+        color: 0xffffff
+    });
+    shipSprite = new THREE.Sprite(spriteMaterial);
+    scene.add(shipSprite);
+    //// ////
+
+    //// ////
     raycaster = new THREE.Raycaster();
     mouse = new THREE.Vector2();
 
     ambientLight = new THREE.AmbientLight(0xffffff);
     scene.add(ambientLight);
     //// ////
+
+
+    controller.setup();
 }
 
 function animate() {
 
     requestAnimationFrame(animate);
 
-    keyboard();
+    // controller.update();
+    // console.log(controller.keyCodes);
+
+    var left = -1;
+    var up = 1;
+    var right = 1;
+    var down = -1;
+
+    var speed = camera.position.z / 40;
+
+    if (controller.leftarrow) {
+        camera.position.x += left * speed;
+    }
+    if (controller.uparrow) {
+        camera.position.y += up * speed;
+    }
+    if (controller.rightarrow) {
+        camera.position.x += right * speed;
+    }
+    if (controller.downarrow) {
+        camera.position.y += down * speed;
+    }
+
+    //shift 16
+    //ctrl	17
+
+    var shift = -1;
+    var ctrl = 1;
+
+    if (controller.keyCodes[16]) {
+        camera.position.z += shift * speed;
+    }
+    if (controller.keyCodes[17]) {
+        camera.position.z += ctrl * speed;
+    }
+
+
 
     // update the picking ray with the camera and mouse position
     raycaster.setFromCamera(mouse, camera);
@@ -59,7 +112,7 @@ function animate() {
     var intersects = raycaster.intersectObjects(scene.children);
 
     for (var i = 0; i < intersects.length; i++) {
-        console.log(intersects[i].point);
+        // console.log(intersects[i].point);
         // intersects[i].object.material.color.set(0x00ff00);
     }
 
@@ -74,18 +127,7 @@ function animate() {
 
 
 
-// mousemove
-window.addEventListener('mousemove', onMouseMove, false);
 
-function onMouseMove(event) {
-
-    // calculate mouse position in normalized device coordinates
-    // (-1 to +1) for both components
-
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-}
 
 
 // onWindowResize
@@ -97,49 +139,4 @@ function onWindowResize() {
     renderer.setSize(windowWidth, windowHeight);
     camera.aspect = windowWidth / windowHeight;
     camera.updateProjectionMatrix();
-}
-
-
-var keyCode = {}; // You could also use an array
-onkeydown = onkeyup = function (e) {
-    e = e || event; // to deal with IE
-    keyCode[e.keyCode] = e.type == 'keydown';
-    /* insert conditional here */
-}
-
-function keyboard() {
-    if (keyCode) {
-        var left = -1;
-        var up = 1;
-        var right = 1;
-        var down = -1;
-
-        var speed = camera.position.z / 40;
-
-        if (keyCode[37]) {
-            camera.position.x += left * speed;
-        }
-        if (keyCode[38]) {
-            camera.position.y += up * speed;
-        }
-        if (keyCode[39]) {
-            camera.position.x += right * speed;
-        }
-        if (keyCode[40]) {
-            camera.position.y += down * speed;
-        }
-
-        //shift 16
-        //ctrl	17
-
-        var shift = -1;
-        var ctrl = 1;
-
-        if (keyCode[16]) {
-            camera.position.z += shift * speed;
-        }
-        if (keyCode[17]) {
-            camera.position.z += ctrl * speed;
-        }
-    }
 }
