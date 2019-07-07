@@ -11,15 +11,31 @@ class Controller {
         this.char = 'a';
 
         // this.pointer = createVector(0, 0);
+
+        this.mouseRaycaster = new THREE.Raycaster();
+        this.htmlmouse = new THREE.Vector2();
+        this.mouse = new THREE.Vector2();
+
     }
+
+
 
     /**
      * @function - Controller update function, Called for each keyup and keydown
      */
     update() {
 
-        // this.pointer.x = mouseX - windowWidth / 2 + viewport.pos.x;
-        // this.pointer.y = mouseY - windowHeight / 2 + viewport.pos.y;
+        // update the picking ray with the camera and mouse position
+        this.mouseRaycaster.setFromCamera(this.htmlmouse, camera);
+
+        // calculate objects intersecting the picking ray
+        var intersects = this.mouseRaycaster.intersectObjects(scene.children);
+
+        for (var i = 0; i < intersects.length; i++) {
+            this.mouse.x = intersects[i].point.x;
+            this.mouse.y = intersects[i].point.y;
+            // intersects[i].object.material.color.set(0x00ff00);
+        }
 
         this.leftarrow = false;
         this.uparrow = false;
@@ -64,6 +80,9 @@ class Controller {
      * @function - Controller setup function
      */
     setup() {
+        //// mousemove ////
+        window.addEventListener('mousemove', onMouseMove, false);
+
         this.keyCodes = []; // You could also use an array
         for (var i = 0; i <= 222; i++) {
             this.keyCodes[i] = false;
@@ -132,7 +151,10 @@ class Controller {
         this.keyChar[88] = "x";
         this.keyChar[89] = "y";
         this.keyChar[90] = "z";
+
+
     }
+
 }
 
 //// onkeydown onkeyup function ////
@@ -144,16 +166,10 @@ onkeydown = onkeyup = function (e) {
 }
 //// ////
 
-//// mousemove ////
-window.addEventListener('mousemove', onMouseMove, false);
 
 function onMouseMove(event) {
-
     // calculate mouse position in normalized device coordinates
     // (-1 to +1) for both components
-
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
+    controller.htmlmouse.setX((event.clientX / window.innerWidth) * 2 - 1);
+    controller.htmlmouse.setY(-(event.clientY / window.innerHeight) * 2 + 1);
 }
-//// ////
