@@ -96,10 +96,10 @@ function animate() {
     var shift = -1;
     var ctrl = 1;
 
-    if (controller.keyCodes[16]) {
+    if (controller.keyCodes[16] || controller.keyCodes[69]) {
         camera.position.z += shift * speed;
     }
-    if (controller.keyCodes[17]) {
+    if (controller.keyCodes[17] || controller.keyCodes[81]) {
         camera.position.z += ctrl * speed;
     }
 
