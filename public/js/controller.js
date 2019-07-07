@@ -16,6 +16,16 @@ class Controller {
         this.htmlmouse = new THREE.Vector2();
         this.mouse = new THREE.Vector2();
 
+        let spriteMap = new THREE.TextureLoader().load("./assets/images/pointer.png");
+
+        let spriteMaterial = new THREE.SpriteMaterial({
+            map: spriteMap,
+            color: 0xffffff
+        });
+        this.mouseSprite = new THREE.Sprite(spriteMaterial);
+        scene.add(this.mouseSprite);
+
+
     }
 
 
@@ -36,6 +46,10 @@ class Controller {
             this.mouse.y = intersects[i].point.y;
             // intersects[i].object.material.color.set(0x00ff00);
         }
+
+        this.mouseSprite.position.x = this.mouse.x;
+        this.mouseSprite.position.y = this.mouse.y;
+
 
         this.leftarrow = false;
         this.uparrow = false;
