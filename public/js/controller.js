@@ -89,7 +89,6 @@ class Controller {
         }
     }
 
-
     /**
      * @function - Controller setup function
      */
@@ -165,8 +164,6 @@ class Controller {
         this.keyChar[88] = "x";
         this.keyChar[89] = "y";
         this.keyChar[90] = "z";
-
-
     }
 
 }

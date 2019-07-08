@@ -1,8 +1,8 @@
 class Player {
     constructor() {
-        this.pos = new THREE.Vector2(10, 10);
+        this.pos = new THREE.Vector2(-10, 0);
         this.vel = new THREE.Vector2(0, 0);
-        this.acc = new THREE.Vector2(0, 0);
+        this.acc = new THREE.Vector2(10, 0);
         this.angle = 0;
 
         this.maxSpeed = 1;
@@ -24,24 +24,27 @@ class Player {
 
 
         if (controller.uparrow) {
-            let thrust = new THREE.Vector2(1, 0);
+            let thrust = new THREE.Vector2(2, 0);
             thrust.rotateAround(new THREE.Vector2(0, 0), this.angle);
 
-            thrust.multiplyScalar(deltaTime * 0.01);
+            // thrust.multiplyScalar(deltaTime * 0.01);
 
             // thrust = this.awwwwngle;
             // console.log(thrust);
 
             // thrust = p5.Vector.mult(thrust, 10)
-            this.vel.add(thrust);
+            this.acc.add(thrust);
         }
 
         // console.log(this.angle);
 
 
+        this.acc.multiplyScalar(deltaTime);
 
         this.vel.add(this.acc);
         this.vel.clampLength(-this.maxSpeed, this.maxSpeed);
+
+        // this.vel.multiplyScalar(deltaTime);
 
         this.pos.add(this.vel);
         this.shipSprite.position.set(this.pos.x, this.pos.y, 0);
@@ -50,9 +53,24 @@ class Player {
 
         // console.log(this.pos, this.vel, this.acc);
 
+        // this.vel.multiplyScalar(0.95);
+
+        console.log("this.acc.x == " + this.acc.x);
+        console.log("this.vel.x == " + this.vel.x);
+        console.log("this.pos.x == " + this.pos.x);
 
 
-        this.vel.multiplyScalar(0.95);
+
+        // if (this.acc.x.isNaN()) {
+        //     console.error("this.acc.x == " + this.acc.x);
+        // }
+        // if (this.vel.x.isNaN()) {
+        //     console.error("this.vel.x == " + this.vel.x);
+        // }
+        // if (this.pos.x.isNaN()) {
+        //     console.error("this.pos.x == " + this.pos.x);
+        // }
+
 
     }
 

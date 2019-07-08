@@ -18,7 +18,7 @@ let shipSprite;
  * backgroundPlane for mouse raycaster to hit
  */
 let backgroundPlane = new THREE.Mesh(
-    new THREE.PlaneGeometry(50, 50),
+    new THREE.PlaneGeometry(200, 200, 10, 10),
     new THREE.MeshPhongMaterial({
         color: 0x0000ff,
         wireframe: true
@@ -61,6 +61,7 @@ function setup() {}
 
 let deltaTime;
 let then = 0;
+let frameCount = 0;
 /**
  * @description Master Function for running the game   
  * requestAnimationFrame(gameLoop);  
@@ -68,20 +69,37 @@ let then = 0;
  * render();  
  */
 function gameLoop(now) {
-    requestAnimationFrame(gameLoop);
+    // setTimeout(function () {
+
+    //     requestAnimationFrame(gameLoop);
+
+    // }, 1000 / 30);
+
+    now *= 0.001; // make it seconds
+
+    console.log(deltaTime);
 
     deltaTime = now - then;
     then = now;
 
-    update();
-    render();
+    requestAnimationFrame(gameLoop);
+    frameCount++;
+
+    if (frameCount > 100) {
+        update();
+        render();
+    }
+
 }
 
 function update() {
     controller.update();
 
+    console.log("Mouse  x" + controller.mouse.x + "  y" + controller.mouse.y);
+
     // player.shipSprite.position.x = controller.mouse.x;
     // player.shipSprite.position.y = controller.mouse.y;
+
 
 
     var left = -1;
@@ -118,6 +136,9 @@ function update() {
     }
 
     player.update();
+
+    camera.position.x = player.pos.x;
+    camera.position.y = player.pos.y;
 
 }
 
