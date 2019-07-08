@@ -8,9 +8,8 @@ Three.Js Github
 https://github.com/mrdoob/three.js/
 
 - [x] Controller Keyboard
-- [ ] Add mouse to controller
-- [ ] add viewport file
-- [ ] 
+- [x] Add mouse to controller
+- [x] Added deltaTime
 
 
 # File System
