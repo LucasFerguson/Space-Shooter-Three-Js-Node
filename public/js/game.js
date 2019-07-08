@@ -13,7 +13,6 @@ let mouse;
 let shipSprite;
 //// ////
 
-
 /**
  * backgroundPlane for mouse raycaster to hit
  */
@@ -38,7 +37,6 @@ scene.add(ambientLight);
 ///    ////    ////
 //    ////    ////
 
-
 /**
  * player
  */
@@ -55,6 +53,7 @@ controller.setup();
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
+
 
 function setup() {}
 
@@ -85,12 +84,15 @@ function gameLoop(now) {
     requestAnimationFrame(gameLoop);
     frameCount++;
 
-    if (frameCount > 100) {
+    if (frameCount > 10) {
         update();
         render();
     }
 
 }
+////    ////    ////
+///    ////    ////
+//    ////    ////
 
 function update() {
     controller.update();
@@ -139,13 +141,17 @@ function update() {
 
     camera.position.x = player.pos.x;
     camera.position.y = player.pos.y;
-
 }
+////    ////    ////
+///    ////    ////
+//    ////    ////
 
 function render() {
-
     renderer.render(scene, camera);
 }
+////    ////    ////
+///    ////    ////
+//    ////    ////
 
 setup();
 gameLoop();
