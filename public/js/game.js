@@ -10,8 +10,8 @@ let raycaster;
 let mouse;
 
 let world = {
-    width: 500,
-    height: 500
+    width: 2000,
+    height: 2000
 }
 
 
@@ -22,7 +22,7 @@ let shipSprite;
  * backgroundPlane for mouse raycaster to hit
  */
 let backgroundPlane = new THREE.Mesh(
-    new THREE.PlaneGeometry(world.width, world.height, 10, 10),
+    new THREE.PlaneGeometry(world.width, world.height, 1, 1),
     new THREE.MeshPhongMaterial({
         color: 0xffffff,
         wireframe: true
@@ -33,7 +33,6 @@ scene.add(backgroundPlane);
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
-
 
 /**
  * backgroundPlane for mouse raycaster to hit
@@ -121,7 +120,9 @@ controller.setup();
 //    ////    ////
 
 
+
 function setup() {}
+
 
 
 let deltaTime;
@@ -163,10 +164,8 @@ function update() {
 
     // console.log("Mouse  x" + controller.mouse.x + "  y" + controller.mouse.y);
 
-
-
-    backgroundSphere2.position.x = Math.sin(frameCount / 500) * 400;
-    backgroundSphere2.position.z = -500 + Math.cos(frameCount / 500) * 400;
+    backgroundSphere2.position.x = Math.sin(frameCount / 400) * 400;
+    backgroundSphere2.position.z = -500 + Math.cos(frameCount / 400) * 400;
 
     var left = -1;
     var up = 1;
@@ -201,13 +200,11 @@ function update() {
         camera.position.z += ctrl * speed;
     }
 
-
-    controller.uparrow = true;
-
     player.update();
 
     camera.position.x = player.pos.x;
     camera.position.y = player.pos.y;
+
 }
 ////    ////    ////
 ///    ////    ////
