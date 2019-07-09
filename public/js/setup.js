@@ -43,6 +43,33 @@ camera.position.z = 50;
 //    ////    ////
 
 
+/**
+ * textureLoader
+ */
+var textureLoader = new THREE.TextureLoader();
+
+var images = {
+    skybox: {
+        front: textureLoader.load("./assets/images/skybox/front.png"),
+        back: textureLoader.load("./assets/images/skybox/back.png"),
+        up: textureLoader.load("./assets/images/skybox/up.png"),
+        down: textureLoader.load("./assets/images/skybox/down.png"),
+        right: textureLoader.load("./assets/images/skybox/right.png"),
+        left: textureLoader.load("./assets/images/skybox/left.png")
+    }
+};
+console.log(images);
+// C:\Users\Lucas\Documents\GitHub\Space-Shooter-Three-Js-Node\public\assets\images\skybox\purplenebula_bk.png
+////    ////    ////
+///    ////    ////
+//    ////    ////
+
+
+
+
+
+
+
 // onWindowResize
 window.addEventListener('resize', onWindowResize, false);
 

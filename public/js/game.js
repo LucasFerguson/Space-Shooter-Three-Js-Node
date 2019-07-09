@@ -29,16 +29,53 @@ let backgroundPlane = new THREE.Mesh(
     })
 );
 scene.add(backgroundPlane);
-// backgroundPlane.material.visible = false;
+backgroundPlane.material.visible = false;
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
 
 /**
- * backgroundPlane for mouse raycaster to hit
+ * skybox for mouse raycaster to hit
+ */
+let skybox = new THREE.Mesh(
+    new THREE.CubeGeometry(world.width, world.width, world.width),
+    [
+        new THREE.MeshBasicMaterial({
+            map: images.skybox.front,
+            side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: images.skybox.back,
+            side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: images.skybox.up,
+            side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: images.skybox.down,
+            side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: images.skybox.right,
+            side: THREE.DoubleSide
+        }),
+        new THREE.MeshBasicMaterial({
+            map: images.skybox.left,
+            side: THREE.DoubleSide
+        }),
+    ]
+);
+scene.add(skybox);
+////    ////    ////
+///    ////    ////
+//    ////    ////
+
+/**
+ * backgroundSphere for mouse raycaster to hit
  */
 let backgroundSphere1 = new THREE.Mesh(
-    new THREE.SphereBufferGeometry(250, 25, 25),
+    new THREE.SphereBufferGeometry(250, 25, 25), // 250, 25, 25
     new THREE.MeshStandardMaterial({
         flatShading: true,
         color: 0x0000ff
@@ -53,7 +90,7 @@ scene.add(backgroundSphere1);
 //    ////    ////
 
 /**
- * backgroundPlane for mouse raycaster to hit
+ * backgroundSpher2 for mouse raycaster to hit
  */
 let backgroundSphere2 = new THREE.Mesh(
     new THREE.SphereBufferGeometry(60, 10, 10),
@@ -91,16 +128,19 @@ directionalLight.castShadow = true; // default false
 directionalLight.shadow.mapSize.width = 512; // default
 directionalLight.shadow.mapSize.height = 512; // default
 directionalLight.shadow.camera.near = 0.5; // default
-directionalLight.shadow.camera.far = 500 // default
-directionalLight.position.set(0, 0, 1);
+directionalLight.shadow.camera.far = 100
+// default
+directionalLight.position.set(0.5, 0, 1);
 scene.add(directionalLight);
+
+// //Create a helper for the shadow camera (optional)
+// var helper = new THREE.CameraHelper(directionalLight.shadow.camera);
+// scene.add(helper);
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
 
-//Create a helper for the shadow camera (optional)
-var helper = new THREE.CameraHelper(directionalLight.shadow.camera);
-scene.add(helper);
+
 
 /**
  * player
@@ -122,7 +162,6 @@ controller.setup();
 
 
 function setup() {}
-
 
 
 let deltaTime;
@@ -159,6 +198,9 @@ function gameLoop(now) {
 ///    ////    ////
 //    ////    ////
 
+/**
+ * update
+ */
 function update() {
     controller.update();
 
@@ -205,11 +247,19 @@ function update() {
     camera.position.x = player.pos.x;
     camera.position.y = player.pos.y;
 
+    skybox.position.x = camera.position.x;
+    skybox.position.y = camera.position.y;
+    skybox.position.z = camera.position.z;
+
+
 }
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
 
+/**
+ * render
+ */
 function render() {
     renderer.render(scene, camera);
 }
