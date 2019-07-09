@@ -9,6 +9,11 @@
 let raycaster;
 let mouse;
 
+let world = {
+    width: 500,
+    height: 500
+}
+
 
 let shipSprite;
 //// ////
@@ -17,13 +22,33 @@ let shipSprite;
  * backgroundPlane for mouse raycaster to hit
  */
 let backgroundPlane = new THREE.Mesh(
-    new THREE.PlaneGeometry(200, 200, 10, 10),
+    new THREE.PlaneGeometry(world.width, world.height, 10, 10),
     new THREE.MeshPhongMaterial({
-        color: 0x0000ff,
+        color: 0xffffff,
         wireframe: true
     })
 );
 scene.add(backgroundPlane);
+// backgroundPlane.material.visible = false;
+////    ////    ////
+///    ////    ////
+//    ////    ////
+
+
+/**
+ * backgroundPlane for mouse raycaster to hit
+ */
+let backgroundSphere1 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(250, 25, 25),
+    new THREE.MeshStandardMaterial({
+        flatShading: true,
+        color: 0x0000ff
+    })
+);
+backgroundSphere1.castShadow = true; //default is false
+backgroundSphere1.receiveShadow = true; //default false
+backgroundSphere1.position.z = -500;
+scene.add(backgroundSphere1);
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
@@ -31,11 +56,52 @@ scene.add(backgroundPlane);
 /**
  * backgroundPlane for mouse raycaster to hit
  */
-let ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(ambientLight);
+let backgroundSphere2 = new THREE.Mesh(
+    new THREE.SphereBufferGeometry(60, 10, 10),
+    new THREE.MeshStandardMaterial({
+        flatShading: true,
+        color: 0x0000ff
+    })
+);
+backgroundSphere2.position.x = 0;
+backgroundSphere2.position.y = 0;
+backgroundSphere2.position.z = -150;
+backgroundSphere2.castShadow = true; //default is false
+backgroundSphere2.receiveShadow = true; //default false
+scene.add(backgroundSphere2);
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
+
+/**
+ * ambientLight Disabled **Disabled**
+ */
+let ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+// scene.add(ambientLight); // **Disabled**
+////    ////    ////
+///    ////    ////
+//    ////    ////
+
+/**
+ * directionalLight 
+ */
+var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+directionalLight.castShadow = true; // default false
+
+//Set up shadow properties for the light
+directionalLight.shadow.mapSize.width = 512; // default
+directionalLight.shadow.mapSize.height = 512; // default
+directionalLight.shadow.camera.near = 0.5; // default
+directionalLight.shadow.camera.far = 500 // default
+directionalLight.position.set(0, 0, 1);
+scene.add(directionalLight);
+////    ////    ////
+///    ////    ////
+//    ////    ////
+
+//Create a helper for the shadow camera (optional)
+var helper = new THREE.CameraHelper(directionalLight.shadow.camera);
+scene.add(helper);
 
 /**
  * player
@@ -76,8 +142,6 @@ function gameLoop(now) {
 
     now *= 0.001; // make it seconds
 
-    console.log(deltaTime);
-
     deltaTime = now - then;
     then = now;
 
@@ -97,12 +161,12 @@ function gameLoop(now) {
 function update() {
     controller.update();
 
-    console.log("Mouse  x" + controller.mouse.x + "  y" + controller.mouse.y);
-
-    // player.shipSprite.position.x = controller.mouse.x;
-    // player.shipSprite.position.y = controller.mouse.y;
+    // console.log("Mouse  x" + controller.mouse.x + "  y" + controller.mouse.y);
 
 
+
+    backgroundSphere2.position.x = Math.sin(frameCount / 500) * 400;
+    backgroundSphere2.position.z = -500 + Math.cos(frameCount / 500) * 400;
 
     var left = -1;
     var up = 1;
@@ -136,6 +200,9 @@ function update() {
     if (controller.keyCodes[17] || controller.keyCodes[81]) {
         camera.position.z += ctrl * speed;
     }
+
+
+    controller.uparrow = true;
 
     player.update();
 

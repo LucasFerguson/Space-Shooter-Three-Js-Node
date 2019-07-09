@@ -5,11 +5,13 @@
 //      ////////////////////////////
 
 /**
- * This is the renderer
+ * Create a WebGLRenderer with shadows in the renderer
  */
 const renderer = new THREE.WebGLRenderer({
     antialias: true
 });
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 ////    ////    ////
@@ -35,7 +37,7 @@ const camera = new THREE.PerspectiveCamera(
     0.01,
     10000
 );
-camera.position.z = 20;
+camera.position.z = 50;
 ////    ////    ////
 ///    ////    ////
 //    ////    ////

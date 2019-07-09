@@ -38,13 +38,21 @@ class Controller {
         // update the picking ray with the camera and mouse position
         this.mouseRaycaster.setFromCamera(this.htmlmouse, camera);
 
-        // calculate objects intersecting the picking ray
-        var intersects = this.mouseRaycaster.intersectObjects(scene.children);
+        // // calculate objects intersecting the picking ray
+        // var intersects = this.mouseRaycaster.intersectObjects(scene.children);
 
-        for (var i = 0; i < intersects.length; i++) {
-            this.mouse.x = intersects[i].point.x;
-            this.mouse.y = intersects[i].point.y;
-            // intersects[i].object.material.color.set(0x00ff00);
+        // for (var i = 0; i < intersects.length; i++) {
+        //     this.mouse.x = intersects[i].point.x;
+        //     this.mouse.y = intersects[i].point.y;
+        //     // intersects[i].object.material.color.set(0x00ff00);
+        // }
+
+        // calculate objects intersecting the picking ray
+        var intersect = this.mouseRaycaster.intersectObject(backgroundPlane);
+
+        if (intersect[0]) {
+            this.mouse.x = intersect[0].point.x;
+            this.mouse.y = intersect[0].point.y;
         }
 
         this.mouseSprite.position.x = this.mouse.x;
