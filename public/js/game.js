@@ -113,7 +113,7 @@ scene.add(backgroundSphere2);
  * ambientLight Disabled **Disabled**
  */
 let ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
-// scene.add(ambientLight); // **Disabled**
+scene.add(ambientLight); // **Disabled**
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
@@ -140,6 +140,33 @@ scene.add(directionalLight);
 ///    ////    ////
 //    ////    ////
 
+/**
+ * directionalLight 
+ */
+
+// geometry
+var geometry = new THREE.Geometry();
+geometry.vertices.push(
+    new THREE.Vector3(-10, 10, 0),
+    new THREE.Vector3(-10, -10, 0),
+    new THREE.Vector3(10, -10, 0)
+);
+
+
+geometry.faces.push(new THREE.Face3(0, 1, 2));
+
+// material
+var material = new THREE.MeshStandardMaterial({
+    color: 0xffffff
+})
+
+// line
+var line = new THREE.Mesh(geometry, material);
+scene.add(line);
+line.geometry.verticesNeedUpdate = true;
+////    ////    ////
+///    ////    ////
+//    ////    ////
 
 
 /**
@@ -205,6 +232,9 @@ function update() {
     controller.update();
 
     // console.log("Mouse  x" + controller.mouse.x + "  y" + controller.mouse.y);
+    line.geometry.vertices[1].x += 0.1;
+    line.updateMatrix();
+    console.log(line.geometry.vertices[1].x);
 
     backgroundSphere2.position.x = Math.sin(frameCount / 400) * 400;
     backgroundSphere2.position.z = -500 + Math.cos(frameCount / 400) * 400;
