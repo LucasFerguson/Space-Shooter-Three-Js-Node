@@ -1,3 +1,6 @@
+/**
+ * Player
+ */
 class Player {
     constructor() {
         this.pos = new THREE.Vector2(-10, 0);
