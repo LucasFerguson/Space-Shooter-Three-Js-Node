@@ -58,7 +58,7 @@ var images = {
         left: textureLoader.load("./assets/images/skybox/left.png")
     }
 };
-console.log(images);
+// console.log(images);
 // C:\Users\Lucas\Documents\GitHub\Space-Shooter-Three-Js-Node\public\assets\images\skybox\purplenebula_bk.png
 ////    ////    ////
 ///    ////    ////

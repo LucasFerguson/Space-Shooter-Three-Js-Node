@@ -105,7 +105,7 @@ backgroundSphere2.position.z = -150;
 backgroundSphere2.castShadow = true; //default is false
 backgroundSphere2.receiveShadow = true; //default false
 scene.add(backgroundSphere2);
-////    ////    ////
+////    ////    //// 
 ///    ////    ////
 //    ////    ////
 
@@ -141,7 +141,7 @@ scene.add(directionalLight);
 //    ////    ////
 
 /**
- * directionalLight 
+ * geometry 
  */
 
 // geometry
@@ -151,7 +151,6 @@ geometry.vertices.push(
     new THREE.Vector3(-10, -10, 0),
     new THREE.Vector3(10, -10, 0)
 );
-
 
 geometry.faces.push(new THREE.Face3(0, 1, 2));
 
@@ -167,6 +166,48 @@ line.geometry.verticesNeedUpdate = true;
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
+
+
+/**
+ * SHAPE
+ * One-sided
+ */
+// geometry
+var rectShape = new THREE.Shape();
+
+rectShape.moveTo(0, 0);
+rectShape.lineTo(0, 100);
+rectShape.lineTo(50, 100);
+//
+rectShape.lineTo(60, 50);
+rectShape.lineTo(20, 10);
+
+//
+rectShape.lineTo(50, 0);
+rectShape.lineTo(0, 0);
+
+var extrudeSettings = {
+    amount: 8,
+    bevelEnabled: true,
+    bevelSegments: 2,
+    steps: 2,
+    bevelSize: 1,
+    bevelThickness: 1
+};
+
+var geometry = new THREE.ShapeBufferGeometry(rectShape);
+
+var mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial());
+
+scene.add(mesh);
+////    ////    ////
+///    ////    ////
+//    ////    ////
+
+
+
+
+
 
 
 /**
@@ -232,9 +273,6 @@ function update() {
     controller.update();
 
     // console.log("Mouse  x" + controller.mouse.x + "  y" + controller.mouse.y);
-    line.geometry.vertices[1].x += 0.1;
-    line.updateMatrix();
-    console.log(line.geometry.vertices[1].x);
 
     backgroundSphere2.position.x = Math.sin(frameCount / 400) * 400;
     backgroundSphere2.position.z = -500 + Math.cos(frameCount / 400) * 400;

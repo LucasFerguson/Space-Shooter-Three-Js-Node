@@ -7,13 +7,33 @@ class Player {
 
         this.maxSpeed = 1;
 
-        let spriteMap = new THREE.TextureLoader().load("./assets/images/Space Ship.png");
+        // let spriteMap = new THREE.TextureLoader().load("./assets/images/Space Ship.png");
 
-        let spriteMaterial = new THREE.SpriteMaterial({
-            map: spriteMap,
-            color: 0xffffff
-        });
-        this.shipSprite = new THREE.Sprite(spriteMaterial);
+        // let spriteMaterial = new THREE.SpriteMaterial({
+        //     map: spriteMap,
+        //     color: 0xffffff
+        // });
+        // this.shipSprite = new THREE.Sprite(spriteMaterial);
+        // scene.add(this.shipSprite);
+
+        this.scale = 3;
+
+        var rectShape = new THREE.Shape();
+
+        rectShape.moveTo(0, 0);
+        rectShape.lineTo(0, 11 * this.scale);
+        rectShape.lineTo(11 * this.scale, -6 * this.scale);
+        rectShape.lineTo(5 * this.scale, -10 * this.scale);
+        rectShape.lineTo(0, -6 * this.scale);
+        rectShape.lineTo(-5 * this.scale, -10 * this.scale);
+        rectShape.lineTo(-11 * this.scale, -6 * this.scale);
+        rectShape.lineTo(0, 11 * this.scale);
+        rectShape.lineTo(0, 0);
+
+        var geometry = new THREE.ShapeBufferGeometry(rectShape);
+
+        this.shipSprite = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial());
+
         scene.add(this.shipSprite);
 
     }
@@ -51,7 +71,8 @@ class Player {
 
         this.pos.add(this.vel);
         this.shipSprite.position.set(this.pos.x, this.pos.y, 0);
-        this.shipSprite.material.rotation = this.angle - Math.PI / 2;
+        // this.shipSprite.material.rotation = this.angle - Math.PI / 2;
+        this.shipSprite.rotation.z = this.angle - Math.PI / 2;
         this.acc.multiplyScalar(0);
 
         this.vel.multiplyScalar(0.95);
