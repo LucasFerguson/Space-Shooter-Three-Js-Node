@@ -5,13 +5,12 @@ class Laser {
         this.acc = new THREE.Vector2(0, 0);
         this.angle = 0;
 
-        let spriteMap = new THREE.TextureLoader().load("./assets/images/Space Ship.png");
-
-        let spriteMaterial = new THREE.SpriteMaterial({
-            map: spriteMap,
-            color: 0xffffff
-        });
-        this.shipSprite = new THREE.Sprite(spriteMaterial);
+        // let spriteMap = new THREE.TextureLoader().load("./assets/images/Space Ship.png");
+        // let spriteMaterial = new THREE.SpriteMaterial({
+        //     map: spriteMap,
+        //     color: 0xffffff
+        // });
+        this.shipSprite = player.shipSprite.clone();
         scene.add(this.shipSprite);
 
     }

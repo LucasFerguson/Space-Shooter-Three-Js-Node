@@ -11,9 +11,9 @@ let mouse;
 
 let world = {
     width: 2000,
-    height: 2000
+    height: 2000,
+    depth: 2000
 }
-
 
 let shipSprite;
 //// ////
@@ -38,7 +38,7 @@ backgroundPlane.material.visible = false;
  * skybox for mouse raycaster to hit
  */
 let skybox = new THREE.Mesh(
-    new THREE.CubeGeometry(world.width, world.width, world.width),
+    new THREE.CubeGeometry(world.width, world.height, world.depth),
     [
         new THREE.MeshBasicMaterial({
             map: images.skybox.front,
@@ -77,7 +77,7 @@ scene.add(skybox);
 let backgroundSphere1 = new THREE.Mesh(
     new THREE.SphereBufferGeometry(250, 25, 25), // 250, 25, 25
     new THREE.MeshStandardMaterial({
-        flatShading: true,
+        // flatShading: true,
         color: 0x0000ff
     })
 );
@@ -95,7 +95,7 @@ scene.add(backgroundSphere1);
 let backgroundSphere2 = new THREE.Mesh(
     new THREE.SphereBufferGeometry(60, 10, 10),
     new THREE.MeshStandardMaterial({
-        flatShading: true,
+        // flatShading: true,
         color: 0x0000ff
     })
 );
@@ -105,6 +105,7 @@ backgroundSphere2.position.z = -150;
 backgroundSphere2.castShadow = true; //default is false
 backgroundSphere2.receiveShadow = true; //default false
 scene.add(backgroundSphere2);
+
 ////    ////    //// 
 ///    ////    ////
 //    ////    ////
@@ -121,21 +122,28 @@ scene.add(ambientLight); // **Disabled**
 /**
  * directionalLight 
  */
-var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.castShadow = true; // default false
 
-//Set up shadow properties for the light
-directionalLight.shadow.mapSize.width = 512; // default
-directionalLight.shadow.mapSize.height = 512; // default
-directionalLight.shadow.camera.near = 0.5; // default
-directionalLight.shadow.camera.far = 100
-// default
-directionalLight.position.set(0.5, 0, 1);
+var directionalLight = new THREE.DirectionalLight(0xffffff);
+directionalLight.position.set(world.width / 4, 0, world.depth / 2);
+directionalLight.target.position.set(0, 0, 0);
+directionalLight.castShadow = true;
+
+// these six values define the boundaries of the yellow box
+directionalLight.shadow.camera.near = 2;
+directionalLight.shadow.camera.far = world.depth;
+directionalLight.shadow.camera.left = -1000;
+directionalLight.shadow.camera.right = 1000;
+directionalLight.shadow.camera.top = 1000;
+directionalLight.shadow.camera.bottom = -1000;
+
+// shadow map
+directionalLight.shadow.mapSize.set(512 * 3, 512 * 3);
+
 scene.add(directionalLight);
 
-// //Create a helper for the shadow camera (optional)
-// var helper = new THREE.CameraHelper(directionalLight.shadow.camera);
-// scene.add(helper);
+// only for debugging
+scene.add(new THREE.CameraHelper(directionalLight.shadow.camera))
+
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
@@ -198,7 +206,8 @@ var extrudeSettings = {
 var geometry = new THREE.ShapeBufferGeometry(rectShape);
 
 var mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial());
-
+mesh.castShadow = true; //default is false
+mesh.receiveShadow = true; //default false
 scene.add(mesh);
 ////    ////    ////
 ///    ////    ////
@@ -228,8 +237,37 @@ controller.setup();
 //    ////    ////
 
 
+var textmesh;
 
-function setup() {}
+function setup() {
+
+    /**
+     * TextGeometry 
+     */
+
+    var textgeo = new THREE.TextGeometry('Hay three.js!', {
+        font: font_helvetiker,
+        size: 10,
+        height: 10
+    });
+
+    let textmat = new THREE.MeshPhongMaterial();
+
+    textmesh = new THREE.Mesh(textgeo, textmat);
+
+    textmesh.geometry = new THREE.TextGeometry('Hello NEW World', {
+        font: font_helvetiker,
+        size: 10,
+        height: 0
+    });
+
+    scene.add(textmesh);
+
+
+    ////    ////    ////
+    ///    ////    ////
+    //    ////    ////
+}
 
 
 let deltaTime;
@@ -242,6 +280,7 @@ let frameCount = 0;
  * render();  
  */
 function gameLoop(now) {
+
     // setTimeout(function () {
 
     //     requestAnimationFrame(gameLoop);
@@ -310,6 +349,10 @@ function update() {
         camera.position.z += ctrl * speed;
     }
 
+    if (controller.keyCodes[17] || controller.keyCodes[81]) {
+        camera.position.z += ctrl * speed;
+    }
+
     player.update();
 
     camera.position.x = player.pos.x;
@@ -335,7 +378,11 @@ function render() {
 ///    ////    ////
 //    ////    ////
 
-setup();
-gameLoop();
+
+function runGame() {
+    console.log("runGame");
+    setup();
+    gameLoop();
+}
 
 ////////////////////////////////////

@@ -10,6 +10,8 @@ class Player {
 
         this.maxSpeed = 1;
 
+        this.lasers = [];
+
         // let spriteMap = new THREE.TextureLoader().load("./assets/images/Space Ship.png");
 
         // let spriteMaterial = new THREE.SpriteMaterial({
@@ -19,7 +21,7 @@ class Player {
         // this.shipSprite = new THREE.Sprite(spriteMaterial);
         // scene.add(this.shipSprite);
 
-        this.scale = 3;
+        this.scale = 0.1;
 
         var rectShape = new THREE.Shape();
 
@@ -35,8 +37,9 @@ class Player {
 
         var geometry = new THREE.ShapeBufferGeometry(rectShape);
 
-        this.shipSprite = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial());
-
+        this.shipSprite = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({}));
+        this.shipSprite.castShadow = true; //default is false
+        this.shipSprite.receiveShadow = true; //default false
         scene.add(this.shipSprite);
 
     }
@@ -65,6 +68,10 @@ class Player {
             let thrust = new THREE.Vector2(3, 0);
             thrust.rotateAround(new THREE.Vector2(0, 0), this.angle - Math.PI / 2);
             this.acc.add(thrust);
+        }
+
+        if (controller.keyCodes[32]) {
+            this.fireLaser();
         }
 
         this.acc.multiplyScalar(deltaTime);
@@ -98,4 +105,9 @@ class Player {
     }
 
     // render() { }
+
+    fireLaser() {
+        console.log("laser fire");
+        this.lasers.push(new Laser(this.pos, this.vel));
+    }
 }
