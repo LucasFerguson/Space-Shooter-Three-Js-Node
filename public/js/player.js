@@ -40,6 +40,7 @@ class Player {
         this.shipSprite = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({}));
         this.shipSprite.castShadow = true; //default is false
         this.shipSprite.receiveShadow = true; //default false
+        this.shipSprite.name = "Player Ship Sprite";
         scene.add(this.shipSprite);
 
     }
@@ -85,7 +86,16 @@ class Player {
         this.shipSprite.rotation.z = this.angle - Math.PI / 2;
         this.acc.multiplyScalar(0);
 
-        this.vel.multiplyScalar(0.95);
+        this.vel.multiplyScalar(0.99);
+
+        for (let i = 0; i < this.lasers.length; i++) {
+            this.lasers[i].update();
+            if (this.lasers[i].outofbounds()) {
+                // console.log("outofbounds");
+                this.lasers[i].remove();
+                this.lasers.splice(i, 1);
+            }
+        }
 
         // console.log("this.acc.x == " + this.acc.x);
         // console.log("this.vel.x == " + this.vel.x);
@@ -107,7 +117,13 @@ class Player {
     // render() { }
 
     fireLaser() {
-        console.log("laser fire");
-        this.lasers.push(new Laser(this.pos, this.vel));
+        // console.log("laser fire");
+
+        let dir = new THREE.Vector2(2, 0);
+        dir.rotateAround(new THREE.Vector2(0, 0), this.angle);
+
+        dir.add(this.vel);
+
+        this.lasers.push(new Laser(this.pos, dir));
     }
 }

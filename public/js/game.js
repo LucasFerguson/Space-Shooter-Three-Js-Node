@@ -22,12 +22,13 @@ let shipSprite;
  * backgroundPlane for mouse raycaster to hit
  */
 let backgroundPlane = new THREE.Mesh(
-    new THREE.PlaneGeometry(world.width, world.height, 1, 1),
+    new THREE.PlaneGeometry(world.width, world.height, 10, 10),
     new THREE.MeshPhongMaterial({
         color: 0xffffff,
         wireframe: true
     })
 );
+backgroundPlane.name = "backgroundPlane";
 scene.add(backgroundPlane);
 backgroundPlane.material.visible = false;
 ////    ////    ////
@@ -67,6 +68,7 @@ let skybox = new THREE.Mesh(
     ]
 );
 scene.add(skybox);
+skybox.name = "skybox";
 ////    ////    ////
 ///    ////    ////
 //    ////    ////
@@ -84,6 +86,7 @@ let backgroundSphere1 = new THREE.Mesh(
 backgroundSphere1.castShadow = true; //default is false
 backgroundSphere1.receiveShadow = true; //default false
 backgroundSphere1.position.z = -500;
+backgroundSphere1.name = "backgroundSphere1";
 scene.add(backgroundSphere1);
 ////    ////    ////
 ///    ////    ////
@@ -104,6 +107,7 @@ backgroundSphere2.position.y = 0;
 backgroundSphere2.position.z = -150;
 backgroundSphere2.castShadow = true; //default is false
 backgroundSphere2.receiveShadow = true; //default false
+backgroundSphere2.name = "backgroundSphere2";
 scene.add(backgroundSphere2);
 
 ////    ////    //// 
@@ -114,6 +118,7 @@ scene.add(backgroundSphere2);
  * ambientLight Disabled **Disabled**
  */
 let ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+ambientLight.name = "ambientLight";
 scene.add(ambientLight); // **Disabled**
 ////    ////    ////
 ///    ////    ////
@@ -138,6 +143,8 @@ directionalLight.shadow.camera.bottom = -1000;
 
 // shadow map
 directionalLight.shadow.mapSize.set(512 * 3, 512 * 3);
+
+directionalLight.name = "directionalLight";
 
 scene.add(directionalLight);
 
@@ -362,6 +369,8 @@ function update() {
     skybox.position.y = camera.position.y;
     skybox.position.z = camera.position.z;
 
+
+    console.log(scene.children);
 
 }
 ////    ////    ////
