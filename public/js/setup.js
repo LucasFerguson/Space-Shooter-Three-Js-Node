@@ -74,6 +74,37 @@ camera.position.z = 50;
 ///    ////    ////
 //    ////    ////
 
+/**
+ * MATTER JS
+ */
+// module aliases
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    World = Matter.World,
+    Bodies = Matter.Bodies;
+
+// create an engine
+var engine = Engine.create();
+engine.world.gravity.y = -1;
+
+// create two boxes and a ground http://chandlerprall.github.io/Physijs/
+var circleA = Bodies.circle(0, 0, 80);
+var circleB = Bodies.circle(400, 200, 80);
+
+var ground = Bodies.rectangle(0, -500, 800, 60, {
+    isStatic: true
+});
+
+// add all of the bodies to the world
+World.add(engine.world, [circleA, circleB, ground]);
+
+// run the engine
+Engine.run(engine);
+
+
+////    ////    ////
+///    ////    ////
+//    ////    ////
 
 /**
  * textureLoader
@@ -110,27 +141,6 @@ var fontLoader = new THREE.FontLoader();
 // bevelSize: 8,
 // bevelOffset: 0,
 // bevelSegments: 5
-// });
-
-// fontLoader.load('./assets/fonts/helvetiker_regular.typeface.json', function (font) {
-//     FONT_helvetiker = new THREE.Font(font);
-//     console.log(FONT_helvetiker);
-
-//     asdf();
-
-//     var textgeo = new THREE.TextGeometry('Hello three.js!', {
-//         font: font,
-//         size: 10,
-//         height: 0
-//     });
-
-//     let textmat = new THREE.MeshPhongMaterial();
-
-//     let textmesh = new THREE.Mesh(textgeo, textmat);
-
-//     scene.add(textmesh);
-
-
 // });
 
 var font_helvetiker;
