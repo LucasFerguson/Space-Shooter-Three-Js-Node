@@ -370,7 +370,7 @@ function update() {
     skybox.position.z = camera.position.z;
 
 
-    console.log(scene.children);
+    // console.log(scene.children);
 
 }
 ////    ////    ////

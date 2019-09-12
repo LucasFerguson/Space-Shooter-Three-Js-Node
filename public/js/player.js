@@ -124,6 +124,6 @@ class Player {
 
         dir.add(this.vel);
 
-        this.lasers.push(new Laser(this.pos, dir));
+        this.lasers.push(new Laser(this.pos, dir, this.angle));
     }
 }
