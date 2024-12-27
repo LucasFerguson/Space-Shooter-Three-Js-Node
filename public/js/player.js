@@ -10,8 +10,6 @@ class Player {
 
         this.maxSpeed = 1;
 
-        this.lasers = [];
-
         // let spriteMap = new THREE.TextureLoader().load("./assets/images/Space Ship.png");
 
         // let spriteMaterial = new THREE.SpriteMaterial({
@@ -37,7 +35,12 @@ class Player {
 
         var geometry = new THREE.ShapeBufferGeometry(rectShape);
 
-        this.shipSprite = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({}));
+        var material = new THREE.MeshPhongMaterial({
+            color: 0x00ff00,
+            side: THREE.DoubleSide
+        });
+
+        this.shipSprite = new THREE.Mesh(geometry, material);
         this.shipSprite.castShadow = true; //default is false
         this.shipSprite.receiveShadow = true; //default false
         this.shipSprite.name = "Player Ship Sprite";
@@ -87,31 +90,6 @@ class Player {
         this.acc.multiplyScalar(0);
 
         this.vel.multiplyScalar(0.99);
-
-        for (let i = 0; i < this.lasers.length; i++) {
-            this.lasers[i].update();
-            if (this.lasers[i].outofbounds()) {
-                // console.log("outofbounds");
-                this.lasers[i].remove();
-                this.lasers.splice(i, 1);
-            }
-        }
-
-        // console.log("this.acc.x == " + this.acc.x);
-        // console.log("this.vel.x == " + this.vel.x);
-        // console.log("this.pos.x == " + this.pos.x);
-
-
-
-        // if (this.acc.x.isNaN()) {
-        //     console.error("this.acc.x == " + this.acc.x);
-        // }
-        // if (this.vel.x.isNaN()) {
-        //     console.error("this.vel.x == " + this.vel.x);
-        // }
-        // if (this.pos.x.isNaN()) {
-        //     console.error("this.pos.x == " + this.pos.x);
-        // }
     }
 
     // render() { }
@@ -124,6 +102,6 @@ class Player {
 
         dir.add(this.vel);
 
-        this.lasers.push(new Laser(this.pos, dir, this.angle));
+        lasers.push(new Laser(this.pos, dir, this.angle));
     }
 }

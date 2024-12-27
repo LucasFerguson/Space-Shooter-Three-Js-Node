@@ -27,20 +27,21 @@ class Laser {
 
         var geometry = new THREE.ShapeBufferGeometry(rectShape);
 
-        this.shipSprite = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({}));
-        this.shipSprite.castShadow = true; //default is false
-        this.shipSprite.receiveShadow = true; //default false
+        var material = new THREE.MeshPhongMaterial({  
+            color: 0xffffff,
+        });
+
+        this.shipSprite = new THREE.Mesh(geometry, material);
+        this.shipSprite.castShadow = false; //default is false
+        this.shipSprite.receiveShadow = false; //default false
         this.shipSprite.name = "Player Laser Sprite";
         scene.add(this.shipSprite);
 
-
         // this.shipSprite = player.shipSprite.clone();
         // scene.add(this.shipSprite);
-
     }
 
-    update() {
-        
+    update() {        
         this.acc.multiplyScalar(deltaTime);
 
         this.vel.add(this.acc);
@@ -53,7 +54,6 @@ class Laser {
         // console.log("this.acc.x == " + this.acc.x);
         // console.log("this.vel.x == " + this.vel.x);
         // console.log("this.pos.x == " + this.pos.x);
-
     }
 
     outofbounds() {

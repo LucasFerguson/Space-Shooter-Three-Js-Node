@@ -15,6 +15,9 @@ let world = {
     depth: 2000
 }
 
+let enemies = [];
+let lasers = [];
+
 let shipSprite;
 //// ////
 
@@ -306,7 +309,6 @@ function gameLoop(now) {
         update();
         render();
     }
-
 }
 ////    ////    ////
 ///    ////    ////
@@ -368,9 +370,31 @@ function update() {
     skybox.position.x = camera.position.x;
     skybox.position.y = camera.position.y;
     skybox.position.z = camera.position.z;
-
-
     // console.log(scene.children);
+
+    if (frameCount % 100 == 0) {
+        // create new random vector for position
+        let pos = new THREE.Vector2(Math.random() * world.width - world.width / 2, Math.random() * world.height - world.height / 2);
+        console.log("Creating enemy frameCount == " + frameCount + " pos.x == " + pos.x + " pos.y == " + pos.y);
+
+        enemies.push(new EnemyBasic(pos));
+    }
+
+    // update all lasers
+    for (let i = 0; i < lasers.length; i++) {
+        lasers[i].update();
+        if (lasers[i].outofbounds()) {
+            // console.log("outofbounds");
+            lasers[i].remove();
+            lasers.splice(i, 1);
+        }
+    }
+
+    // update all enemies
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].update();
+    }
+
 
 }
 ////    ////    ////
