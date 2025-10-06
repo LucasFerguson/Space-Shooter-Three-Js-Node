@@ -10,6 +10,10 @@ https://github.com/mrdoob/three.js/
 - [x] Controller Keyboard
 - [x] Add mouse to controller
 - [x] Added deltaTime
+- [ ] Create Collision detection engine for bullets and ships
+  - Should I use a library?
+- [ ] Add player health
+- [ ] Add Enemies that attack the player
 
 
 # File System

@@ -255,7 +255,7 @@ function setup() {
      * TextGeometry 
      */
 
-    var textgeo = new THREE.TextGeometry('Hay three.js!', {
+    var textgeo = new THREE.TextGeometry('This is a Three.js TextGeometry', {
         font: font_helvetiker,
         size: 10,
         height: 10
